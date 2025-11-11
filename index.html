@@ -3,97 +3,90 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="google-adsense-account" content="ca-pub-4322067918472507">
   <title>InstaTruth — Smart Instagram Follower Checker</title>
   <meta name="description" content="InstaTruth — Find who truly follows you back. Accurate, private, and client-side Instagram follower checker built by Hansraj.">
-<meta name="google-adsense-account" content="ca-pub-4322067918472507">
   <style>
     :root{
       --bg:#222222;
       --panel: rgba(255,255,255,0.03);
-      --muted:#fff5eb;
+      --muted: #fff5eb;
       --text:#fff5eb;
-      --accent1:#fff5eb;
-      --accent2:#fff5eb;
-      --glow:0 12px 40px rgba(124,58,237,0.12);
+      --accent1: #fff5eb;
+      --accent2: #fff5eb;
+      --glow: 0 12px 40px rgba(124,58,237,0.16);
       --radius:14px;
-      --max-width:980px;
     }
 
     html,body{height:100%;margin:0}
     body{
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-      background: radial-gradient(1200px 400px at 10% 10%, rgba(79,70,229,0.04), transparent), var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 400px at 10% 10%, rgba(79,70,229,0.06), transparent), var(--bg);
       color:var(--text);
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       display:flex;
       align-items:flex-start;
-      justify-content:center;
-      padding:20px;
+      justify-content:flex-start;
+      padding:28px 28px 48px;
     }
 
-    .container{
+    .app{
       width:100%;
-      max-width:var(--max-width);
+      max-width:980px;
       display:grid;
-      grid-template-columns:1fr 420px;
-      gap:20px;
+      grid-template-columns: 1fr 420px;
+      gap:22px;
       align-items:start;
     }
 
-    /* Header */
-    .toolbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
-    .brand{display:flex;align-items:center;gap:12px}
-    .logo-img{width:56px;height:56px;border-radius:12px;object-fit:cover;box-shadow:var(--glow);border:1px solid rgba(255,255,255,0.04)}
+    /* Header / toolbar */
+    .toolbar{grid-column:1 / -1;display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:8px;}
+    .brand{display:flex;align-items:center;gap:12px;}
+    .logo-img{width:56px;height:56px;border-radius:12px;object-fit:cover;box-shadow:var(--glow);border:1px solid rgba(255,255,255,0.04);} 
     .title{font-size:18px;font-weight:700}
     .subtitle{font-size:13px;color:var(--muted)}
-    .controls{display:flex;gap:8px;align-items:center}
-    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:999px;color:var(--text);cursor:pointer}
+    .controls{display:flex;gap:10px;align-items:center}
+    .toggle{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--text)}
 
-    /* Main */
-    .card{background:var(--panel);border-radius:var(--radius);padding:16px;box-shadow:0 10px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02)}
+    /* Main card */
+    .main-card{background:var(--panel);border-radius:var(--radius);padding:18px;min-height:420px;box-shadow:0 10px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02)}
     h1{margin:0;font-size:20px}
-    p.lead{margin:6px 0 10px;color:var(--muted);font-size:13px}
-    label{display:block;color:var(--muted);font-size:13px;margin-bottom:6px}
-    textarea{width:100%;min-height:140px;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);color:var(--text);resize:vertical;outline:none;font-size:13px}
+    p.lead{margin:6px 0 0;color:var(--muted);font-size:13px}
 
-    .actions{display:flex;gap:10px;align-items:center;margin-top:12px}
-    .btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:white;padding:10px 14px;border-radius:100px;font-weight:700;cursor:pointer}
-    .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:9px 12px}
+    label{font-size:13px;color:var(--muted);display:block;margin-bottom:8px}
+    textarea{width:100%;min-height:160px;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);color:var(--text);resize:vertical;outline:none;font-size:13px}
 
-    /* OCR UI */
-    .ocr-area{margin-top:12px;display:flex;flex-direction:column;gap:8px}
-    .ocr-controls{display:flex;gap:8px;align-items:center}
-    .file-input{color:var(--muted)}
-    .ocr-status{font-size:13px;color:var(--muted)}
+    .controls-row{display:flex;gap:12px;align-items:center;margin-top:12px}
+    .btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:#222222;padding:10px 14px;border-radius:109px;font-weight:700;cursor:pointer}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);font-weight:600;padding:9px 12px}
 
-    /* Sidebar */
-    .sidebar{display:flex;flex-direction:column;gap:12px}
+    /* Sidebar / results */
+    .sidebar{background:var(--panel);padding:18px;border-radius:12px;min-height:420px;display:flex;flex-direction:column;gap:12px;box-shadow:0 10px 30px rgba(2,6,23,0.4);border:1px solid rgba(255,255,255,0.02)}
     .result{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:10px;padding:12px;flex:1;max-height:calc(100vh - 240px);overflow:auto;border:1px solid rgba(255,255,255,0.03)}
     .list-item{padding:8px 10px;border-radius:8px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);font-weight:600}
     .empty{color:var(--muted);font-style:italic}
     .small{font-size:12px;color:var(--muted)}
 
-    /* Footer */
-    footer{grid-column:1/-1;margin-top:12px;display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px}
+    /* Footer & watermark */
+    footer.app-footer{grid-column:1 / -1;margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .end{ text-align:center; margin-top:18px; }
+    .footerimg{ opacity:0.25; max-width:180px; transition:opacity .25s ease; filter:grayscale(1) brightness(1.1); border-radius:8px; }
+    .footerimg:hover{ opacity:0.45; }
+    /* If you prefer fixed corner watermark, uncomment and use .watermark */
+    .watermark{position:fixed;right:18px;bottom:18px;opacity:0.18;pointer-events:none;user-select:none;max-width:180px;filter:grayscale(1);}
 
-    /* Watermark fixed corner (not in normal flow) */
-    .watermark{position:fixed;right:12px;bottom:12px;opacity:0.16;pointer-events:none;user-select:none;max-width:160px;filter:grayscale(1);border-radius:8px}
-
-    /* Responsive */
     @media (max-width:930px){
-      .container{grid-template-columns:1fr;padding:0}
+      .app{grid-template-columns:1fr;}
       .toolbar{flex-direction:column;align-items:flex-start}
-      .watermark{display:none}
+      .sidebar{order:2}
     }
-
-    /* Misc */
-    pre.debug{background:rgba(0,0,0,0.12);padding:8px;border-radius:6px;color:var(--muted);font-size:13px;overflow:auto}
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="app">
 
+    <!-- Header -->
     <div class="toolbar">
       <div class="brand">
         <img src="logo.png" alt="InstaTruth logo" class="logo-img" />
@@ -105,94 +98,72 @@
 
       <div class="controls">
         <div class="small">Dark mode (kept)</div>
-        <button id="clearBtnTop" class="btn-ghost" title="Clear all">🧹 Clear</button>
+        <button id="clearBtnTop" class="toggle" title="Clear all fields">🧹 Clear</button>
       </div>
     </div>
 
-    <!-- Left: input + OCR -->
-    <main class="card" id="mainCard">
-      <div style="display:flex;align-items:center;justify-content:space-between;">
+    <!-- Main input card -->
+    <section class="main-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
         <div>
           <h1>Accurate Instagram Follower Checker</h1>
-          <p class="lead">Paste raw exports, <!--upload a screenshot-->, or use copy/paste. Everything is processed locally in your browser.</p>
+          <p class="lead">Paste raw Instagram exports or plain lists. The parser is tuned to accurately extract usernames from various formats — all processing happens in your browser.</p>
         </div>
-        <div class="small">Tip: Ctrl/Cmd + Enter to run</div>
+        <div class="small">Tip: Press <strong>Ctrl/Cmd + Enter</strong> to run.</div>
       </div>
 
       <label for="followers"><strong>Followers List:</strong></label>
-      <textarea id="followers" placeholder="Paste followers list or upload screenshot below"></textarea>
+      <textarea id="followers" placeholder="Paste your followers (raw Instagram data)"></textarea>
 
       <label for="following"><strong>Following List:</strong></label>
-      <textarea id="following" placeholder="Paste following list"></textarea>
+      <textarea id="following" placeholder="Paste your following (raw Instagram data)"></textarea>
 
-      <div class="actions" style="align-items:center">
+      <div class="controls-row">
         <button id="runBtn" class="btn">Check Non-Followers</button>
-        <button id="exportBtn" class="btn secondary">Export .txt</button>
+        <button id="exportBtn" class="btn ghost">Export .txt</button>
         <div id="countInfo" style="margin-left:auto;color:var(--muted);font-weight:700">Followers: 0 • Following: 0</div>
       </div>
+    </section>
 
-      <!-- OCR screenshot uploader 
-      <div class="ocr-area">
-        <div style="display:flex;align-items:center;gap:10px;justify-content:space-between;">
-          <div class="ocr-controls">
-            <label class="file-input">
-              <input id="screenshotUpload" type="file" accept="image/*" style="display:none">
-              <button id="chooseFile" class="btn secondary" type="button">Upload Screenshot</button>
-            </label>
-            <button id="ocrButton" class="btn secondary" type="button">Run OCR</button>
-            <select id="ocrTarget" title="Choose where detected usernames go" style="background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.04);padding:8px;border-radius:8px">
-              <option value="followers">Load into Followers</option>
-              <option value="following">Load into Following</option>
-            </select>
-            <button id="clearImage" class="btn-ghost" type="button">Clear Image</button>
-          </div>
-          <div id="ocrStatus" class="ocr-status">Upload a screenshot (modal cropped gives best results)</div>
-        </div>
-
-        <div id="previewWrap" style="display:none;margin-top:8px;">
-          <div style="display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap;">
-            <img id="previewImg" alt="screenshot preview" style="max-width:280px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)"/>
-            <div style="flex:1;min-width:180px">
-              <div style="font-size:13px;color:var(--muted);margin-bottom:6px">Preview — you can crop before OCR (not implemented: see tip)</div>
-              <pre id="ocrDebug" class="debug" style="height:160px;overflow:auto;display:none"></pre>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>-->
-    <!-- Right: results -->
+    <!-- Sidebar results -->
     <aside class="sidebar">
       <div style="display:flex;justify-content:space-between;align-items:center">
         <div style="font-weight:700">Not Following You Back</div>
         <div class="small">Detected usernames only</div>
       </div>
 
-      <div id="result" class="result">
+      <div class="result" id="result">
         <div id="nonFollowersList" class="empty">No data yet.</div>
       </div>
 
       <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
-        <div class="small">Export or copy results</div>
-        <div>
-          <button id="copyBtn" class="btn-ghost">📋 Copy</button>
+        <div class="small">Export or copy results for cleanup</div>
+        <div style="display:flex;gap:8px">
+          <button id="copyBtn" class="toggle">📋 Copy</button>
         </div>
       </div>
     </aside>
 
-    <footer>
-      <div>© 2025 InstaTruth — Built with ♥ by <a href="https://hansrajweb.netlify.app" target="_blank" style="color:var(--accent2);text-decoration:none">Hansraj</a></div>
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="small">© 2025 InstaTruth — Built with ♥ by <a href="https://hansrajweb.netlify.app" target="_blank" style="color:var(--accent2);text-decoration:none">Hansraj</a></div>
       <div class="small">Private • Secure • Accurate</div>
     </footer>
+
+    <!-- linked footer logo (visible) -->
+    <p class="end">
+      <a href="https://hansrajweb.netlify.app" target="_blank" rel="noopener">
+        <img class="footerimg" src="rkspsauswbhkb.png" alt="InstaTruth — Hansraj logo">
+      </a>
+    </p>
+
   </div>
 
-  <!-- fixed watermark image (not in page flow) -->
-  <img src="rkspsauswbhkb.png" alt="InstaTruth watermark" class="watermark" />
-
-  <!-- Tesseract.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4.1.3/dist/tesseract.min.js"></script>
+  <!-- Option: keep a subtle corner watermark instead of footer image (commented out)
+  <img src="rkspsauswbhkb.png" alt="watermark" class="watermark"> -->
 
   <script>
-    // === DOM refs
+    // === DOM references (declared before use) ===
     const followersEl = document.getElementById('followers');
     const followingEl = document.getElementById('following');
     const runBtn = document.getElementById('runBtn');
@@ -202,46 +173,45 @@
     const nonFollowersList = document.getElementById('nonFollowersList');
     const countInfo = document.getElementById('countInfo');
 
-    const screenshotInput = document.getElementById('screenshotUpload');
-    const chooseFileBtn = document.getElementById('chooseFile');
-    const ocrButton = document.getElementById('ocrButton');
-    const ocrStatus = document.getElementById('ocrStatus');
-    const previewWrap = document.getElementById('previewWrap');
-    const previewImg = document.getElementById('previewImg');
-    const ocrDebug = document.getElementById('ocrDebug');
-    const ocrTarget = document.getElementById('ocrTarget');
-    const clearImageBtn = document.getElementById('clearImage');
-
-    // basic right-click / devtools blocking (client-side)
-    document.addEventListener('contextmenu', e => e.preventDefault());
+    // Disable right-click & common devtools shortcuts (client-side only)
+    document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
     document.addEventListener('keydown', function(e){
-      if (e.keyCode === 123) e.preventDefault();
-      if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) e.preventDefault();
-      if (e.ctrlKey && e.keyCode === 85) e.preventDefault();
-      if (e.metaKey && e.altKey && e.keyCode === 73) e.preventDefault();
+      if (e.keyCode === 123) e.preventDefault(); // F12
+      if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) e.preventDefault(); // Ctrl+Shift+I/J/C
+      if (e.ctrlKey && e.keyCode === 85) e.preventDefault(); // Ctrl+U
+      if (e.metaKey && e.altKey && e.keyCode === 73) e.preventDefault(); // Cmd+Opt+I
     });
 
-    // === parser
-    function cleanLine(text){
+    // === Parser (accurate, preserved) ===
+    function cleanLine(text) {
       if (!text) return '';
       try {
-        return text.normalize('NFKD').replace(/[·•]/g,'').replace(/[^\x00-\x7F]/g,'').replace(/\s+/g,' ').trim();
-      } catch(e){
-        return String(text).replace(/\s+/g,' ').trim();
+        return text
+          .normalize('NFKD')
+          .replace(/[·•]/g, '')        // remove dots used as separators
+          .replace(/[^\x00-\x7F]/g, '') // strip emojis / non-ascii junk
+          .replace(/\s+/g, ' ')
+          .trim();
+      } catch (e) {
+        return String(text).replace(/\s+/g, ' ').trim();
       }
     }
 
-    function extractUsernames(rawText){
+    function extractUsernames(rawText) {
       if (!rawText) return [];
       const lines = rawText.split(/\r?\n/).map(cleanLine).filter(l => l !== '');
       const usernames = new Set();
-      for (let line of lines){
+
+      for (let line of lines) {
+        // Capture @username patterns
         const atMatch = line.match(/@([a-zA-Z0-9._]{3,30})/g);
-        if (atMatch) atMatch.forEach(m => usernames.add(m.replace('@','').toLowerCase()));
+        if (atMatch) atMatch.forEach(m => usernames.add(m.replace('@', '').toLowerCase()));
+
+        // Match tokens that look like usernames
         const matches = line.match(/\b[a-zA-Z0-9._]{3,30}\b/g);
-        if (matches){
-          for (let m of matches){
-            if (!/^https?$/.test(m) && !/^www$/.test(m) && m.length >=3){
+        if (matches) {
+          for (let m of matches) {
+            if (!/^https?$/.test(m) && !/^www$/.test(m) && m.length >= 3) {
               if (/[_.0-9]/.test(m) || m === m.toLowerCase()) usernames.add(m.toLowerCase());
             }
           }
@@ -250,6 +220,7 @@
       return Array.from(usernames);
     }
 
+    // === UI helpers ===
     function updateCounts(){
       const f = extractUsernames(followersEl.value);
       const g = extractUsernames(followingEl.value);
@@ -275,23 +246,27 @@
           nonFollowersList.appendChild(el);
         });
       }
+
       updateCounts();
       return notFollowingBack;
     }
 
-    // events: run / copy / export
+    // === Events ===
     runBtn.addEventListener('click', checkNonFollowers);
 
     copyBtn.addEventListener('click', ()=>{
       const nodes = Array.from(nonFollowersList.querySelectorAll('.list-item'));
-      if (nodes.length === 0){ alert('No usernames to copy.'); return; }
+      if(nodes.length === 0){
+        alert('No usernames to copy.');
+        return;
+      }
       const text = nodes.map(n => n.textContent).join('\n');
       navigator.clipboard.writeText(text).then(()=> alert('Copied ' + nodes.length + ' usernames to clipboard'));
     });
 
     exportBtn.addEventListener('click', ()=>{
       const results = checkNonFollowers();
-      if (results.length === 0){ alert('No usernames to export.'); return; }
+      if(results.length === 0){ alert('No usernames to export.'); return; }
       const blob = new Blob([results.join('\n')], {type:'text/plain'});
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a'); a.href = url; a.download = 'not-following-back.txt'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
@@ -301,157 +276,20 @@
       followersEl.value = '';
       followingEl.value = '';
       nonFollowersList.innerHTML = '<div class="empty">No data yet.</div>';
-      previewWrap.style.display = 'none';
-      previewImg.src = '';
-      ocrDebug.style.display = 'none';
       updateCounts();
     });
 
-    // keyboard shortcut
+    // keyboard shortcut: Cmd/Ctrl+Enter to run
     document.addEventListener('keydown', (e)=>{
-      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') checkNonFollowers();
+      if((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
+        checkNonFollowers();
+      }
     });
 
     // initial counts
     updateCounts();
-
-    // === OCR section ===
-    // Helper: preprocess image on canvas and return resized blob URL for tesseract
-    async function preprocessImageBlob(file, maxDim=1400){
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => {
-          // scale to maxDim
-          let w = img.width, h = img.height;
-          const scale = Math.min(1, maxDim / Math.max(w,h));
-          w = Math.round(w * scale);
-          h = Math.round(h * scale);
-
-          const c = document.createElement('canvas');
-          c.width = w; c.height = h;
-          const ctx = c.getContext('2d');
-          ctx.drawImage(img, 0, 0, w, h);
-
-          // basic contrast boost (stretch)
-          const imgData = ctx.getImageData(0,0,w,h);
-          const data = imgData.data;
-          let min=255, max=0;
-          for (let i=0;i<data.length;i+=4){
-            const L = 0.2126*data[i] + 0.7152*data[i+1] + 0.0722*data[i+2];
-            if (L < min) min = L;
-            if (L > max) max = L;
-          }
-          const range = Math.max(1, max-min);
-          for (let i=0;i<data.length;i+=4){
-            const r=data[i], g=data[i+1], b=data[i+2];
-            const L = 0.2126*r + 0.7152*g + 0.0722*b;
-            let v = Math.round((L - min) * 255 / range);
-            v = Math.round(255 * Math.pow(v/255, 0.95));
-            data[i]=data[i+1]=data[i+2]=v;
-            data[i+3]=255;
-          }
-          ctx.putImageData(imgData,0,0);
-
-          c.toBlob(blob => {
-            const url = URL.createObjectURL(blob);
-            resolve({ blob, url });
-          }, 'image/png', 0.9);
-        };
-        img.onerror = () => reject(new Error('Could not load image'));
-        img.src = URL.createObjectURL(file);
-      });
-    }
-
-    // Choose file button
-    chooseFileBtn.addEventListener('click', ()=> screenshotInput.click());
-    screenshotInput.addEventListener('change', async (e)=>{
-      const f = e.target.files && e.target.files[0];
-      if (!f) return;
-      previewWrap.style.display = 'block';
-      previewImg.src = URL.createObjectURL(f);
-      ocrStatus.textContent = 'Image loaded. Click "Run OCR" to process (may take a few seconds).';
-      ocrDebug.style.display = 'none';
-      // store file for OCR run
-      screenshotInput._file = f;
-    });
-
-    clearImageBtn.addEventListener('click', ()=>{
-      screenshotInput.value = '';
-      screenshotInput._file = null;
-      previewWrap.style.display = 'none';
-      previewImg.src = '';
-      ocrStatus.textContent = 'Cleared image.';
-      ocrDebug.style.display = 'none';
-    });
-
-    ocrButton.addEventListener('click', async ()=>{
-      const f = screenshotInput._file;
-      if (!f) { alert('Please upload a screenshot first.'); return; }
-      ocrStatus.textContent = 'Preprocessing image…';
-      try {
-        const { blob, url } = await preprocessImageBlob(f, 1400);
-        ocrStatus.textContent = 'Running OCR (Tesseract)… this can take 5-20s depending on device.';
-        // run Tesseract on the blob URL
-        const worker = Tesseract.createWorker({
-          logger: m => {
-            if (m && m.status && typeof m.progress === 'number') {
-              ocrStatus.textContent = `OCR: ${Math.round(m.progress*100)}% — ${m.status}`;
-            }
-          }
-        });
-        await worker.load();
-        await worker.loadLanguage('eng');
-        await worker.initialize('eng');
-        const { data: { text } } = await worker.recognize(url);
-        await worker.terminate();
-        ocrStatus.textContent = 'OCR finished — extracting usernames…';
-
-        // extract usernames from OCR text
-        const candidates = extractUsernamesFromOCRText(text);
-        if (candidates.length === 0){
-          ocrStatus.textContent = 'No usernames detected — try cropping screenshot to the followers modal and reuploading.';
-          ocrDebug.style.display = 'block';
-          ocrDebug.textContent = text.slice(0, 4000);
-          return;
-        }
-
-        ocrStatus.textContent = `Detected ${candidates.length} usernames — inserting into ${ocrTarget.value}.`;
-        const target = ocrTarget.value === 'following' ? followingEl : followersEl;
-        target.value = candidates.join('\n');
-        if (typeof updateCounts === 'function') updateCounts();
-        if (typeof checkNonFollowers === 'function') checkNonFollowers();
-
-        ocrDebug.style.display = 'block';
-        ocrDebug.textContent = text.slice(0, 4000); // show sample OCR raw text
-      } catch (err) {
-        console.error(err);
-        ocrStatus.textContent = 'OCR failed: ' + (err.message || err);
-      }
-    });
-
-    // heuristics to extract from OCR raw text
-    function extractUsernamesFromOCRText(ocrText){
-      if (!ocrText) return [];
-      let cleaned = ocrText.replace(/[’‘`´•·•]/g, "'").replace(/[^\w@._\s-]/g, ' ');
-      // split then scan
-      const lines = cleaned.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
-      const set = new Set();
-      for (const ln of lines){
-        // find @handles
-        const atMatches = ln.match(/@([a-zA-Z0-9._]{3,30})/g);
-        if (atMatches) atMatches.forEach(m => set.add(m.replace('@','').toLowerCase()));
-        // fallback tokens
-        const tokens = ln.match(/\b[a-zA-Z0-9._]{3,30}\b/g);
-        if (tokens) tokens.forEach(t=>{
-          if (/[_.0-9]/.test(t) || t === t.toLowerCase()) set.add(t.toLowerCase());
-        });
-      }
-      return Array.from(set);
-    }
-
   </script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4322067918472507"
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4322067918472507"
      crossorigin="anonymous"></script>
 </body>
 </html>
-
