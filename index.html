@@ -10,10 +10,10 @@
     :root{
       --bg:#222222;
       --panel: rgba(255,255,255,0.03);
-      --muted:#d1d6db;
+      --muted:#fff5eb;
       --text:#fff5eb;
-      --accent1:#7c3aed;
-      --accent2:#06b6d4;
+      --accent1:#fff5eb;
+      --accent2:#fff5eb;
       --glow:0 12px 40px rgba(124,58,237,0.12);
       --radius:14px;
       --max-width:980px;
@@ -58,7 +58,7 @@
     textarea{width:100%;min-height:140px;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);color:var(--text);resize:vertical;outline:none;font-size:13px}
 
     .actions{display:flex;gap:10px;align-items:center;margin-top:12px}
-    .btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:white;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer}
+    .btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:white;padding:10px 14px;border-radius:100px;font-weight:700;cursor:pointer}
     .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:9px 12px}
 
     /* OCR UI */
@@ -114,7 +114,7 @@
       <div style="display:flex;align-items:center;justify-content:space-between;">
         <div>
           <h1>Accurate Instagram Follower Checker</h1>
-          <p class="lead">Paste raw exports, upload a screenshot, or use copy/paste. Everything is processed locally in your browser.</p>
+          <p class="lead">Paste raw exports, <!--upload a screenshot-->, or use copy/paste. Everything is processed locally in your browser.</p>
         </div>
         <div class="small">Tip: Ctrl/Cmd + Enter to run</div>
       </div>
@@ -131,7 +131,7 @@
         <div id="countInfo" style="margin-left:auto;color:var(--muted);font-weight:700">Followers: 0 • Following: 0</div>
       </div>
 
-      <!-- OCR screenshot uploader -->
+      <!-- OCR screenshot uploader 
       <div class="ocr-area">
         <div style="display:flex;align-items:center;gap:10px;justify-content:space-between;">
           <div class="ocr-controls">
@@ -159,8 +159,7 @@
           </div>
         </div>
       </div>
-    </main>
-
+    </main>-->
     <!-- Right: results -->
     <aside class="sidebar">
       <div style="display:flex;justify-content:space-between;align-items:center">
@@ -455,3 +454,4 @@
      crossorigin="anonymous"></script>
 </body>
 </html>
+
