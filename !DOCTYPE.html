@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Instagram Follower Checker</title>
+  <style>
+    :root{
+      --bg:#030306;
+      --panel: rgba(255,255,255,0.03);
+      --muted: #9aa3b2;
+      --text:#eaf2ff;
+      --accent1: #7c3aed;
+      --accent2: #06b6d4;
+      --glow: 0 12px 40px rgba(124,58,237,0.16);
+      --radius:18px;
+    }
+
+    html,body{height:100%;margin:0}
+    body{
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 400px at 10% 10%, rgba(79,70,229,0.06), transparent), var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:flex-start;
+      justify-content:flex-start;
+      padding:28px 28px 48px;
+    }
+
+    .app{
+      width:100%;
+      max-width:980px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:22px;
+      align-items:start;
+    }
+
+    .toolbar{grid-column:1 / -1;display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:4px;}
+    .brand{display:flex;align-items:center;gap:12px;}
+    .logo-img{width:56px;height:56px;border-radius:14px;object-fit:cover;box-shadow:var(--glow);border:1px solid rgba(255,255,255,0.04);} 
+    .title{font-size:18px; font-weight:600}
+    .subtitle{font-size:13px;color:var(--muted)}
+    .controls{display:flex;gap:10px;align-items:center}
+    .toggle{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:999px;cursor:pointer;font-size:14px;color:var(--text)}
+    .main-card{background:var(--panel);border-radius:var(--radius);padding:18px;min-height:420px;}
+    .heading-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    h1{margin:0;font-size:20px}
+    p.lead{margin:6px 0 0;color:var(--muted);font-size:13px}
+
+    textarea{width:100%;min-height:170px;resize:vertical;padding:12px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);color:var(--text);font-size:13px;outline:none;}
+    label{font-size:13px;color:var(--muted);display:block;margin-bottom:8px}
+    .field{margin-bottom:16px}
+    .btn{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;color:white;padding:10px 14px;border-radius:10px;font-weight:600;cursor:pointer}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);font-weight:600}
+
+    .sidebar{background:var(--panel);padding:18px;border-radius:12px;min-height:420px;display:flex;flex-direction:column;gap:12px}
+    .result{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:10px;padding:12px;flex:1;max-height:calc(100vh - 240px);overflow:auto;border:1px solid rgba(255,255,255,0.03)}
+    .list-item{padding:8px 10px;border-radius:8px;margin-bottom:8px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.02);font-weight:600}
+    .empty{color:var(--muted);font-style:italic}
+    .small{font-size:12px;color:var(--muted)}
+    footer.app-footer{grid-column:1 / -1;margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .watermark{position:fixed;right:18px;bottom:18px;opacity:0.06;pointer-events:none;user-select:none;max-width:180px;filter:grayscale(1)}
+    @media (max-width:930px){.app{grid-template-columns:1fr;} .toolbar{flex-direction:column;align-items:flex-start}}
+  </style>
+</head>
+<body>
+  <div class="app">
+
+    <div class="toolbar">
+      <div class="brand">
+        <img src="logo.png" alt="logo" class="logo-img" />
+        <div>
+          <div class="title">Smart Instagram Follower Checker</div>
+          <div class="subtitle">Quickly find who doesn't follow you back</div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="chip">Dark mode (kept)</div>
+        <button id="clearBtnTop" class="toggle" title="Clear all fields">🧹 Clear</button>
+      </div>
+    </div>
+
+    <section class="main-card">
+      <div class="heading-row">
+        <div>
+          <h1>Paste Instagram exports</h1>
+          <p class="lead">Paste the Followers and Following exports. This tool extracts usernames and lists accounts that don't follow you back. No data leaves your browser.</p>
+        </div>
+        <div class="small">Tip: Use the <strong>Clear</strong> button to reset.</div>
+      </div>
+
+      <div class="field">
+        <label for="followers">Followers (paste raw data)</label>
+        <textarea id="followers" placeholder="Paste followers export or list here"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="following">Following (paste raw data)</label>
+        <textarea id="following" placeholder="Paste following export or list here"></textarea>
+      </div>
+
+      <div style="display:flex;gap:12px;align-items:center;margin-top:6px">
+        <button class="btn" id="runBtn">Check Non-Followers</button>
+        <button id="exportBtn" class="btn ghost">Export .txt</button>
+        <div class="small" id="countInfo">Followers: 0 • Following: 0</div>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:700">Not Following You Back</div>
+        <div class="small">Detected usernames only</div>
+      </div>
+
+      <div class="result" id="result">
+        <div id="nonFollowersList" class="empty">No data yet.</div>
+      </div>
+
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+        <div class="small">Export or copy results for cleanup</div>
+        <div style="display:flex;gap:8px">
+          <button id="copyBtn" class="toggle">📋 Copy</button>
+        </div>
+      </div>
+    </aside>
+
+    <footer class="app-footer">
+      <div class="small">Built with ♥ — lightweight, client-side only. Keep it private — don't paste passwords.</div>
+      <div class="small">rkspsauswbhkb.png - watermark active</div>
+    </footer>
+
+  </div>
+
+  <img src="rkspsauswbhkb.png" alt="watermark" class="watermark" />
+
+  <script>
+    // === DOM references (declare before use) ===
+    const followersEl = document.getElementById('followers');
+    const followingEl = document.getElementById('following');
+    const runBtn = document.getElementById('runBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const exportBtn = document.getElementById('exportBtn');
+    const clearBtnTop = document.getElementById('clearBtnTop');
+    const nonFollowersList = document.getElementById('nonFollowersList');
+    const countInfo = document.getElementById('countInfo');
+
+    // Disable right-click & common devtools shortcuts (client-side only)
+    document.addEventListener('contextmenu', function(e){ e.preventDefault(); });
+    document.addEventListener('keydown', function(e){
+      if (e.keyCode === 123) e.preventDefault(); // F12
+      if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) e.preventDefault();
+      if (e.ctrlKey && e.keyCode === 85) e.preventDefault(); // Ctrl+U
+      if (e.metaKey && e.altKey && e.keyCode === 73) e.preventDefault(); // Cmd+Opt+I
+    });
+
+    // === Parser (kept accurate) ===
+    function cleanLine(text) {
+      if (!text) return '';
+      try {
+        return text.normalize('NFKD').replace(/[·•]/g, '').replace(/[^\x00-\x7F]/g, '').replace(/\s+/g, ' ').trim();
+      } catch (e) {
+        return String(text).replace(/\s+/g, ' ').trim();
+      }
+    }
+
+    function extractUsernames(rawText) {
+      if(!rawText) return [];
+      const lines = rawText.split(/\r?\n/).map(cleanLine).filter(l => l !== '');
+      const usernames = new Set();
+
+      for (let line of lines) {
+        const atMatch = line.match(/@([a-zA-Z0-9._]{3,30})/g);
+        if(atMatch){
+          atMatch.forEach(m=>usernames.add(m.replace('@','').toLowerCase()));
+        }
+
+        const matches = line.match(/\b[a-zA-Z0-9._]{3,30}\b/g);
+        if(matches){
+          matches.forEach(m=>{
+            if(!/^https?$/.test(m) && !/^www$/.test(m) && m.length>=3){
+              if(/[_.0-9]/.test(m) || m === m.toLowerCase()) usernames.add(m.toLowerCase());
+            }
+          });
+        }
+      }
+      return Array.from(usernames);
+    }
+
+    // === Core UI helpers ===
+    function updateCounts(){
+      const f = extractUsernames(followersEl.value);
+      const g = extractUsernames(followingEl.value);
+      countInfo.textContent = `Followers: ${f.length} • Following: ${g.length}`;
+    }
+
+    followersEl.addEventListener('input', updateCounts);
+    followingEl.addEventListener('input', updateCounts);
+
+    function checkNonFollowers(){
+      const followers = extractUsernames(followersEl.value);
+      const following = extractUsernames(followingEl.value);
+      const notFollowingBack = following.filter(u => !followers.includes(u));
+
+      nonFollowersList.innerHTML = '';
+      if(notFollowingBack.length === 0){
+        nonFollowersList.innerHTML = '<div class="empty">Everyone follows you back 🎉</div>';
+      } else {
+        notFollowingBack.sort().forEach(user=>{
+          const el = document.createElement('div');
+          el.className = 'list-item';
+          el.textContent = user;
+          nonFollowersList.appendChild(el);
+        });
+      }
+
+      updateCounts();
+      return notFollowingBack;
+    }
+
+    // === Event wiring ===
+    runBtn.addEventListener('click', checkNonFollowers);
+
+    copyBtn.addEventListener('click', ()=>{
+      const nodes = Array.from(nonFollowersList.querySelectorAll('.list-item'));
+      if(nodes.length === 0){
+        alert('No usernames to copy.');
+        return;
+      }
+      const text = nodes.map(n=>n.textContent).join('\n');
+      navigator.clipboard.writeText(text).then(()=>{
+        alert('Copied ' + nodes.length + ' usernames to clipboard');
+      });
+    });
+
+    exportBtn.addEventListener('click', ()=>{
+      const results = checkNonFollowers();
+      if(results.length === 0){ alert('No usernames to export.'); return; }
+      const blob = new Blob([results.join('\n')], {type:'text/plain'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'not-following-back.txt';
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    clearBtnTop.addEventListener('click', ()=>{
+      followersEl.value = '';
+      followingEl.value = '';
+      nonFollowersList.innerHTML = '<div class="empty">No data yet.</div>';
+      updateCounts();
+    });
+
+    // keyboard shortcut: Cmd/Ctrl+Enter to run
+    document.addEventListener('keydown', (e)=>{
+      if((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
+        checkNonFollowers();
+      }
+    });
+
+    // initial counts
+    updateCounts();
+  </script>
+</body>
+</html>
